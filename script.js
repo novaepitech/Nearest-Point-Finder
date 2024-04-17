@@ -5,10 +5,12 @@
 ** draw points on a canvas and highlight the nearest point to the cursor
 */
 
+const url_params = new URLSearchParams(window.location.search);
+const num_points = url_params.get('point_amount');
+
 const canvas = document.getElementById('myCanvas');
 const canvas_context = canvas.getContext('2d');
 
-const num_points = 100000;
 const points = [];
 
 function generate_random_point()
