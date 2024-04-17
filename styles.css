@@ -1,0 +1,18 @@
+/*
+** MATEO CABRERA's PROJECT, 2024
+** styles.css
+** File description:
+** This file contains the styles for the project
+*/
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+}
+
+canvas {
+    display: block;
+}
