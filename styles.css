@@ -68,3 +68,18 @@ html {
 .generate-button:hover {
     background-color: #3b82f6;
 }
+
+.footer-text {
+    position: absolute;
+    bottom: 0;
+    right: 1%;
+
+    img {
+        width: 20px;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: white;
+}
