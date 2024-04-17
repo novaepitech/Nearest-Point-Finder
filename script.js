@@ -5,33 +5,24 @@
 ** draw points on a canvas and highlight the nearest point to the cursor
 */
 
-const url_params = new URLSearchParams(window.location.search);
-const num_points = url_params.get('point_amount');
-
-const canvas = document.getElementById('myCanvas');
-const canvas_context = canvas.getContext('2d');
-
-// Buffer canvas for drawing points, to avoid redrawing all points every time
-
-const buffer = document.createElement('canvas');
-buffer.width = canvas.width;
-buffer.height = canvas.height;
-const buffer_context = buffer.getContext('2d');
-
-const points = [];
-
-function generate_random_point()
+function generate_random_point(width, height)
 {
-    const x = Math.random() * canvas.width;
-    const y = Math.random() * canvas.height;
+    const x = Math.random() * width;
+    const y = Math.random() * height;
 
     return { x, y };
 }
 
-for (let i = 0; i < num_points; i++)
-    points.push(generate_random_point());
+function generate_points(num_points, width, height)
+{
+    const points = [];
 
-function draw_points()
+    for (let i = 0; i < num_points; i++)
+        points.push(generate_random_point(width, height));
+    return points;
+}
+
+function draw_points(points, buffer_context, canvas_context, buffer)
 {
     buffer_context.fillStyle = 'black';
     for (let i = 0; i < points.length; i++) {
@@ -44,7 +35,7 @@ function draw_points()
     canvas_context.drawImage(buffer, 0, 0);
 }
 
-function find_nearest_point(cursor_x, cursor_y)
+function find_nearest_point(cursor_x, cursor_y, points)
 {
     let min_distance = Infinity;
     let nearest_point = null;
@@ -61,13 +52,12 @@ function find_nearest_point(cursor_x, cursor_y)
     return nearest_point;
 }
 
-draw_points();
-
-canvas.addEventListener('mousemove', (event) => {
+function handle_mousemove(event, points, canvas, buffer, canvas_context)
+{
     const rect = canvas.getBoundingClientRect();
     const cursor_x = event.clientX - rect.left;
     const cursor_y = event.clientY - rect.top;
-    const nearest_point = find_nearest_point(cursor_x, cursor_y);
+    const nearest_point = find_nearest_point(cursor_x, cursor_y, points);
 
     canvas_context.clearRect(0, 0, canvas.width, canvas.height);
     canvas_context.drawImage(buffer, 0, 0);
@@ -75,4 +65,23 @@ canvas.addEventListener('mousemove', (event) => {
     canvas_context.beginPath();
     canvas_context.arc(nearest_point.x, nearest_point.y, 3, 0, 2 * Math.PI);
     canvas_context.fill();
-});
+}
+
+
+function main()
+{
+    const url_params = new URLSearchParams(window.location.search);
+    const num_points = url_params.get('point_amount');
+    const canvas = document.getElementById('myCanvas');
+    const canvas_context = canvas.getContext('2d');
+    const buffer = document.createElement('canvas');
+    buffer.width = canvas.width;
+    buffer.height = canvas.height;
+    const buffer_context = buffer.getContext('2d');
+    const points = generate_points(num_points, canvas.width, canvas.height);
+
+    draw_points(points, buffer_context, canvas_context, buffer);
+    canvas.addEventListener('mousemove', (event) => handle_mousemove(event, points, canvas, buffer, canvas_context));
+}
+
+main();
