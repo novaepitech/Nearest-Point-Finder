@@ -4,6 +4,8 @@ The goal of this project is to create a web application that draws a large numbe
 
 As the user moves their mouse cursor, the application calculates in real-time which point is closest to the cursor.
 
+## [Live Website](https://novaepitech.github.io/projects/Nearest-Point-Finder/)
+
 ## Demo :
 
 ![](https://github.com/novaepitech/Nearest-Point-Finder/blob/main/live-demo.gif)
