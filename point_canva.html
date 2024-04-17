@@ -10,15 +10,18 @@ This is the page where all points are generated and displayed
 
 <head>
     <title>Nearest Point Finder</title>
-    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-    <canvas id="myCanvas" width="1900" height="900"></canvas>
+    <canvas id="myCanvas"></canvas>
 
-    <script src="script.js">
-
+    <script>
+        const canvas = document.getElementById('myCanvas');
+        canvas.width = window.innerWidth - 20;
+        canvas.height = window.innerHeight - 20;
     </script>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
